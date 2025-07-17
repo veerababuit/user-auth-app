@@ -1,0 +1,24 @@
+user-auth-app/
+├── client/
+│   ├── public/
+│   │   ├── index.html
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Home.js
+│   │   │   ├── Login.js
+│   │   │   ├── Signup.js
+│   │   │   ├── Profile.js
+│   │   ├── App.js
+│   │   ├── index.js
+│   ├── package.json
+├── server.js
+├── models/
+│   ├── User.js
+├── routes/
+│   ├── auth.js
+├── test/
+│   ├── auth.test.js
+├── package.json
+├── .env
+
+===========
