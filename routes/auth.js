@@ -51,11 +51,28 @@ router.put('/user', async (req, res) => {
     }
     const token = authHeader.split(' ')[1];
     const decoded = jwt.verify(token, 'secretkey');
-    const { email } = req.body;
-    if (!email) return res.status(400).json({ message: 'Email is required' });
-    const user = await User.findByIdAndUpdate(decoded.id, { email }, { new: true, runValidators: true });
+    const { name, mobile, email } = req.body;
+    if (!name && !mobile && !email) {
+      return res.status(400).json({ message: 'At least one field (name, mobile, or email) is required' });
+    }
+    const user = await User.findById(decoded.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
-    res.json({ message: 'Email updated successfully', email: user.email });
+
+    // Check if email is being updated and if it already exists for another user
+    if (email && email !== user.email) {
+      const emailExists = await User.findOne({ email, _id: { $ne: user._id } });
+      if (emailExists) {
+        return res.status(400).json({ message: 'Email already in use' });
+      }
+    }
+
+    const updateFields = {};
+    if (name) updateFields.name = name;
+    if (mobile) updateFields.mobile = mobile;
+    if (email) updateFields.email = email;
+
+    const updatedUser = await User.findByIdAndUpdate(decoded.id, updateFields, { new: true, runValidators: true });
+    res.json({ message: 'User updated successfully', name: updatedUser.name, mobile: updatedUser.mobile, email: updatedUser.email });
   } catch (error) {
     console.error('Update error:', error.message);
     res.status(401).json({ message: 'Invalid token or update failed' });
