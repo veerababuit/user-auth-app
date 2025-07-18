@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Profile from './components/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
+import Navbar from './components/Navbar';
 
 class ErrorBoundary extends Component {
   state = { hasError: false };
@@ -25,6 +26,7 @@ class ErrorBoundary extends Component {
 function App() {
   return (
     <Router>
+      <Navbar />
       <div className="container mt-5">
         <ErrorBoundary>
           <Routes>

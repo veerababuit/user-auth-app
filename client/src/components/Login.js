@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -17,13 +17,13 @@ function Login() {
     const data = await response.json();
     setMessage(data.message);
     if (response.ok) {
-      localStorage.setItem('token', data.token); // Store the token
-      navigate('/profile'); // Redirect to profile page
+      localStorage.setItem('token', data.token);
+      navigate('/profile');
     }
   };
 
   return (
-    <div className="card p-4">
+    <div className="card p-4 w-50">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -35,6 +35,7 @@ function Login() {
         <button type="submit" className="btn btn-primary">Login</button>
       </form>
       {message && <p className="mt-3">{message}</p>}
+      <p className="mt-3">If user not registered? <Link to="/register">Click here</Link> to Register.</p>
     </div>
   );
 }
