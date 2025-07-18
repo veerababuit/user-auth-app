@@ -153,7 +153,7 @@ function Profile() {
 
           {/* Editable Form */}
           <div className="col-md-6">
-            <h3 className="mb-4">Account Settings</h3>
+            <h5 className="mb-5">Account Settings</h5>
             {editMode ? (
               <form onSubmit={handleUpdate}>
                 <div className="mb-3">
